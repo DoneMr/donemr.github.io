@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="java,design pattern,策略," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="设计模式（Design Pattern）——策略模式&amp;emsp;&amp;emsp;设计模式也是老生常谈的话题了，这里老衲也就做一个自己归纳的小结论，设计模式其实就是编程经验复用，不局限于某一门语言，是一种思想，一种解决问题的思路，所谓常规的设计模式不过是前人总结出来的编程经验，要学习解决这些问题的经验，更要学习碰到问题应该有何种思考，从哪方面入手，设计契合应用场景的模块架构来。&amp;emsp;&amp;emsp;常">
+<meta name="keywords" content="java,design pattern,策略">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式——策略">
+<meta property="og:url" content="http://yoursite.com/2018/05/05/设计模式——策略/index.html">
+<meta property="og:site_name" content="Done blog">
+<meta property="og:description" content="设计模式（Design Pattern）——策略模式&amp;emsp;&amp;emsp;设计模式也是老生常谈的话题了，这里老衲也就做一个自己归纳的小结论，设计模式其实就是编程经验复用，不局限于某一门语言，是一种思想，一种解决问题的思路，所谓常规的设计模式不过是前人总结出来的编程经验，要学习解决这些问题的经验，更要学习碰到问题应该有何种思考，从哪方面入手，设计契合应用场景的模块架构来。&amp;emsp;&amp;emsp;常">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-05T03:42:13.127Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="设计模式——策略">
+<meta name="twitter:description" content="设计模式（Design Pattern）——策略模式&amp;emsp;&amp;emsp;设计模式也是老生常谈的话题了，这里老衲也就做一个自己归纳的小结论，设计模式其实就是编程经验复用，不局限于某一门语言，是一种思想，一种解决问题的思路，所谓常规的设计模式不过是前人总结出来的编程经验，要学习解决这些问题的经验，更要学习碰到问题应该有何种思考，从哪方面入手，设计契合应用场景的模块架构来。&amp;emsp;&amp;emsp;常">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/05/设计模式——策略/"/>
+
+
+
+
+
+  <title>设计模式——策略 | Done blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Done blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/05/设计模式——策略/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Done">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/timg_2.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Done blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">设计模式——策略</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-05T11:39:17+08:00">
+                2018-05-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="设计模式（Design-Pattern）——策略模式"><a href="#设计模式（Design-Pattern）——策略模式" class="headerlink" title="设计模式（Design Pattern）——策略模式"></a>设计模式（Design Pattern）——策略模式</h2><p>&emsp;&emsp;设计模式也是老生常谈的话题了，这里老衲也就做一个自己归纳的小结论，设计模式其实就是<font color="#ff0000">编程经验复用，不局限于某一门语言，是一种思想，一种解决问题的思路，所谓常规的设计模式不过是前人总结出来的编程经验，要学习解决这些问题的经验，更要学习碰到问题应该有何种思考，从哪方面入手，</font>设计契合应用场景的模块架构来。<br>&emsp;&emsp;常例，如果您看完本文引起了强烈的“身体不适”，还请往<a href="mailto:callmedone@foxmail.com" target="_blank" rel="noopener">callmedone@foxmail.com</a>扔出您的问题，评论功能老衲就懒得集成了哈~</p>
+<h2 id="设计原则"><a href="#设计原则" class="headerlink" title="设计原则"></a>设计原则</h2><p>请先记住一句话：软件的开发周期和维护周期相比，开发所用时间和维护迭代时间相比要少很多，所以我们代码的设计核心应该放在提高可维护性和可扩展性的复用程度</p>
+<ul>
+<li>找出应用中可能需要变化的部分，把他们独立出来，不要和不需要变化的代码混合在一起</li>
+<li>针对接口编程，而不是针对实现编程</li>
+<li>多用组合，少用继承</li>
+</ul>
+<p>切入本篇正题，策略模式<br></p>
+<p><font color="#0000FF">策略模式</font>定义了算法族，分别封装起来，让他们之间可以相互替换，<font color="#FF0000">此模式让算法的变化独立于使用算法的调用者。</font>OK,废话不多说，直接上代码，通俗易懂<br><br>首先，我们来设计一种应用场景，就拿付钱来说吧，每个人都会为自己的生活买单，买单的方式也多种多样，总结起来，大概是现金和刷卡。那么，我们就来定义一个付钱的借口来。<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public interface PayStrategy &#123;</span><br><span class="line">        /**</span><br><span class="line">         * pay for anything</span><br><span class="line">         */</span><br><span class="line">        void pay();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>OK，简单粗暴，付钱嘛<br><br>接下来，我们为之前的应用场景来搞几个实现这些付款方式的实现类咯~<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">private static class CashPay implements PayStrategy &#123;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public void pay() &#123;</span><br><span class="line">            System.out.println(&quot;现金付款&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private static class CardPay implements PayStrategy &#123;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public void pay() &#123;</span><br><span class="line">            System.out.println(&quot;刷卡付款&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private static class FacePay implements PayStrategy &#123;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public void pay() &#123;</span><br><span class="line">            System.out.println(&quot;脸付&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>最后，我们来定义一下具备付款条件的东西，那就是人咯~<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">private static class Person &#123;</span><br><span class="line"></span><br><span class="line">    private PayStrategy payStrategy;</span><br><span class="line"></span><br><span class="line">    public Person(String identity) &#123;</span><br><span class="line">        setPayStrategy(identity);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void pay() &#123;</span><br><span class="line">        this.payStrategy.pay();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 设置付款人身份</span><br><span class="line">     *</span><br><span class="line">     * @param identity translate param&apos;s name</span><br><span class="line">     */</span><br><span class="line">    private void setPayStrategy(String identity) &#123;</span><br><span class="line">        switch (identity) &#123;</span><br><span class="line">            case &quot;richer&quot;:</span><br><span class="line">                System.out.println(&quot;我是土豪&quot;);</span><br><span class="line">                this.payStrategy = new CardPay();</span><br><span class="line">                break;</span><br><span class="line">            case &quot;bricker&quot;:</span><br><span class="line">                System.out.println(&quot;我是搬砖工&quot;);</span><br><span class="line">                this.payStrategy = new CashPay();</span><br><span class="line">                break;</span><br><span class="line">            case &quot;mayun&quot;:</span><br><span class="line">                System.out.println(&quot;老子是马云爸爸&quot;);</span><br><span class="line">                this.payStrategy = new FacePay();</span><br><span class="line">                break;</span><br><span class="line">            default:</span><br><span class="line">                break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里老衲就图个方便直接粘贴过来了哈，构造里面直接传递付款人的身份，当然我们这里的话付款人就简单定义3个了，分别是土豪，搬砖工和马云爸爸咯。土豪就刷卡，搬砖工就现金咯，马云爸爸这种级别我也不知道，都有可能吧，姑且就给个脸卡吧。（注：这里这是例子，和命名无丝毫关系，喷子退下吧~）<br><br>接下来就来run一把爽爽吧<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">        Person tuhao = new Person(&quot;richer&quot;);</span><br><span class="line">        tuhao.pay();</span><br><span class="line">        Person banzhuangong = new Person(&quot;bricker&quot;);</span><br><span class="line">        banzhuangong.pay();</span><br><span class="line">        Person mayun = new Person(&quot;mayun&quot;);</span><br><span class="line">        mayun.pay();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>运行结果如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">我是土豪</span><br><span class="line">刷卡付款</span><br><span class="line">我是搬砖工</span><br><span class="line">现金付款</span><br><span class="line">老子是马云爸爸</span><br><span class="line">脸付</span><br></pre></td></tr></table></figure></p>
+<p>好了，编码就那么简单粗暴，您要是没看懂，就再看一遍，下面老衲说一下自己对策略模式（Strategy）的见解<br></p>
+<ul>
+<li>首先，付款这项技能就跟普通攻击似得，谁都会，就是咱们的base算法。</li>
+<li>然后就是升级加点了呗，先会现金，然后刷卡，然后就开大直接脸付了呗。这一类加点技能的话其实就是咱们术语里面的<font color="#DF0000">算法族。</font></li>
+<li>付款者们无需知道怎么付钱，他们只要付钱即可，没有卡，你的手自然而然掏腰包咯，有卡，自然实力装一波刷卡咯，当生命中没有了钱的概念的时候，哥们，脸即可。<br><br>那么唧唧歪歪下来这么多有什么卵用赖？<br><br><br><br>&emsp;&emsp;其实说白了就是这么写，可以去动态的改变你实例所产生的行为，需求发生变更的时候，你可以增加策略，然后让调用者去配置这个新策略即可，缺点就是调用者要知道所有的策略，越来越多臃肿之后，你就会发现尼玛自己都不知道调用哪个了，所以在应用此模式的时候一定要注意使用场景。<br><br>&emsp;&emsp;非要推荐一波Android开发中所用到的策略的话，大哥，请借鉴ListView的setAdapter源码，一看结构就能看出来，显而易见，策略模式嘛，这里就不贴过来了，挺朴实一个东西，整复杂了大家烦，写起来也恶心，复杂的系统也是这些朴实的东西堆积起来的，把基础的东西弄明白了，你也可以设计出复杂可靠的系统来，无他，唯手熟尔~（<font color="#FF0000">这里有坏笑的emoj啊！</font>）<br></li>
+</ul>
+<p>&emsp;&emsp;OK,拿去装13不谢</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/design-pattern/" rel="tag"># design pattern</a>
+          
+            <a href="/tags/策略/" rel="tag"># 策略</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/05/hello-world/" rel="next" title="镇博首贴">
+                <i class="fa fa-chevron-left"></i> 镇博首贴
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/05/设计模式——观察者/" rel="prev" title="设计模式——观察者">
+                设计模式——观察者 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/timg_2.gif"
+                alt="Done" />
+            
+              <p class="site-author-name" itemprop="name">Done</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/DoneMr" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/u012402505" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-globe"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#设计模式（Design-Pattern）——策略模式"><span class="nav-number">1.</span> <span class="nav-text">设计模式（Design Pattern）——策略模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计原则"><span class="nav-number">2.</span> <span class="nav-text">设计原则</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Done</span>
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+
