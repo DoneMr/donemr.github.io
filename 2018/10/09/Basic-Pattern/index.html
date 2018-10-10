@@ -79,13 +79,13 @@
 
 
 
-<meta name="description" content="设计模式基础 关键 重要 备用在讲设计原则之前，我先强制灌输大家一波鸡汤，提倡 面向接口编程，代码的设计更重要的是考虑以后的扩展和可维护性大家带着这样的思维来学习设计模式以及设计原则，慢慢就意会这波毒鸡汤了。先声明一点就是老衲的blog，也是边学习，边记录，而后以讨论交流的方式叙述，有什么不对的地方大家多多担待。## 设计原则### 单一职责原则（Single Responsibility Pri">
+<meta name="description" content="设计模式基础 关键 重要 备用在讲设计原则之前，我先强制灌输大家一波鸡汤，提倡 面向接口编程，代码的设计更重要的是考虑以后的扩展和可维护性大家带着这样的思维来学习设计模式以及设计原则，慢慢就意会这波毒鸡汤了。先声明一点就是老衲的blog，也是边学习，边记录，而后以讨论交流的方式叙述，有什么不对的地方大家多多担待。如果您对Android开发感兴趣，或者也是正在学习的路人，可以加群一起交流~ 群号：9">
 <meta name="keywords" content="java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="设计模式基础">
 <meta property="og:url" content="http://yoursite.com/2018/10/09/Basic-Pattern/index.html">
 <meta property="og:site_name" content="Done blog">
-<meta property="og:description" content="设计模式基础 关键 重要 备用在讲设计原则之前，我先强制灌输大家一波鸡汤，提倡 面向接口编程，代码的设计更重要的是考虑以后的扩展和可维护性大家带着这样的思维来学习设计模式以及设计原则，慢慢就意会这波毒鸡汤了。先声明一点就是老衲的blog，也是边学习，边记录，而后以讨论交流的方式叙述，有什么不对的地方大家多多担待。## 设计原则### 单一职责原则（Single Responsibility Pri">
+<meta property="og:description" content="设计模式基础 关键 重要 备用在讲设计原则之前，我先强制灌输大家一波鸡汤，提倡 面向接口编程，代码的设计更重要的是考虑以后的扩展和可维护性大家带着这样的思维来学习设计模式以及设计原则，慢慢就意会这波毒鸡汤了。先声明一点就是老衲的blog，也是边学习，边记录，而后以讨论交流的方式叙述，有什么不对的地方大家多多担待。如果您对Android开发感兴趣，或者也是正在学习的路人，可以加群一起交流~ 群号：9">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://note.youdao.com/yws/public/resource/c71037a83aa2a16f1752f9f6db8d74aa/xmlnote/E82BBC5C9DAC468D98850E35CD3265EE/2889">
 <meta property="og:image" content="https://note.youdao.com/yws/public/resource/c71037a83aa2a16f1752f9f6db8d74aa/xmlnote/B169FFCD93CE446696461D6B19EF1871/2894">
@@ -94,10 +94,10 @@
 <meta property="og:image" content="https://note.youdao.com/yws/public/resource/c71037a83aa2a16f1752f9f6db8d74aa/xmlnote/DDBEDDC6C228411C9D13900B7878C9B0/2910">
 <meta property="og:image" content="https://note.youdao.com/yws/public/resource/c71037a83aa2a16f1752f9f6db8d74aa/xmlnote/D010D0C832E14373A0CFF7C2110E9C59/3105">
 <meta property="og:image" content="https://note.youdao.com/yws/public/resource/c71037a83aa2a16f1752f9f6db8d74aa/xmlnote/452900A0801442F18E05E2A410696BA7/3128">
-<meta property="og:updated_time" content="2018-10-09T09:12:01.886Z">
+<meta property="og:updated_time" content="2018-10-09T11:34:29.571Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式基础">
-<meta name="twitter:description" content="设计模式基础 关键 重要 备用在讲设计原则之前，我先强制灌输大家一波鸡汤，提倡 面向接口编程，代码的设计更重要的是考虑以后的扩展和可维护性大家带着这样的思维来学习设计模式以及设计原则，慢慢就意会这波毒鸡汤了。先声明一点就是老衲的blog，也是边学习，边记录，而后以讨论交流的方式叙述，有什么不对的地方大家多多担待。## 设计原则### 单一职责原则（Single Responsibility Pri">
+<meta name="twitter:description" content="设计模式基础 关键 重要 备用在讲设计原则之前，我先强制灌输大家一波鸡汤，提倡 面向接口编程，代码的设计更重要的是考虑以后的扩展和可维护性大家带着这样的思维来学习设计模式以及设计原则，慢慢就意会这波毒鸡汤了。先声明一点就是老衲的blog，也是边学习，边记录，而后以讨论交流的方式叙述，有什么不对的地方大家多多担待。如果您对Android开发感兴趣，或者也是正在学习的路人，可以加群一起交流~ 群号：9">
 <meta name="twitter:image" content="https://note.youdao.com/yws/public/resource/c71037a83aa2a16f1752f9f6db8d74aa/xmlnote/E82BBC5C9DAC468D98850E35CD3265EE/2889">
 
 
@@ -331,9 +331,22 @@
 
       
         <h2 id="设计模式基础-关键-重要-备用"><a href="#设计模式基础-关键-重要-备用" class="headerlink" title="设计模式基础 关键 重要 备用"></a>设计模式基础 关键 重要 备用</h2><p>在讲设计原则之前，我先强制灌输大家一波鸡汤，提倡</p>
-<font color="#FF0000"><br>面向接口编程，代码的设计更重要的是考虑以后的扩展和可维护性<br></font><br>大家带着这样的思维来学习设计模式以及设计原则，慢慢就意会这波毒鸡汤了。<br>先声明一点就是老衲的blog，也是边学习，边记录，而后以讨论交流的方式叙述，有什么不对的地方大家多多担待。<br><div align="center"><br><img src="https://note.youdao.com/yws/public/resource/c71037a83aa2a16f1752f9f6db8d74aa/xmlnote/E82BBC5C9DAC468D98850E35CD3265EE/2889" width="200" height="200" alt="沉迷代码"><br></div><br><br>## 设计原则<br><br>### 单一职责原则（Single Responsibility Principle， 简称是SRP）<br>老衲是一位粗鄙之人，所以描述也是尽可能的白话哈~<br><br>#### 定义<br>白话单一职责：首先，顾名思义，什么是单一职责？就是某玩意，专门负责某个东西，就譬如说，你的手机屏幕，他就只负责显示，不管显示app还是视频还是小黄书，只要是显示的活，他就干，而且他就只干显示的活，这就是单一职责，那么放到术语里面就是咱们设计的接口或者类，尽量遵循此原则，有什么好处赖？<br><em> 类的复杂性降低， 实现什么职责都有清晰明确的定义
-</em> 可读性提高， 复杂性降低， 那当然可读性提高了<br><em> 可维护性提高， 可读性提高， 那当然更容易维护了
-</em> 变更引起的风险降低， 变更是必不可少的， 如果接口的单一职责做得好， 一个接口修<br>改只对相应的实现类有影响， 对其他的接口无影响， 这对系统的扩展性、 维护性都有非常大<br>的帮助<br><br>这一波好处摘自设计模式之禅，总结下来就是，看见这个接口所声明的方法，你就知道功能都有什么，初学者或者初接手的人都可以很快融入到代码中进行迭代和维护了。<br><br>然而道理是这个道理，但是具体在设计代码的时候，还是要考虑到具体的应用下。用书中的话描述就是<br><font color="#FF0000"><br>单一职责原则提出了一个编写程序的标准， 用“职责”或“变化原因”来衡量接口或<br>类设计得是否优良， 但是“职责”和“变化原因”都是不可度量的， 因项目而异， 因环境而异<br></font>  
+<font color="#FF0000"><br>面向接口编程，代码的设计更重要的是考虑以后的扩展和可维护性<br></font><br>大家带着这样的思维来学习设计模式以及设计原则，慢慢就意会这波毒鸡汤了。<br>先声明一点就是老衲的blog，也是边学习，边记录，而后以讨论交流的方式叙述，有什么不对的地方大家多多担待。<br><br><font color="#FF0000"><br>如果您对Android开发感兴趣，或者也是正在学习的路人，可以加群一起交流~ 群号：929891705<br></font>  
+
+
+<div align="center"><br><img src="https://note.youdao.com/yws/public/resource/c71037a83aa2a16f1752f9f6db8d74aa/xmlnote/E82BBC5C9DAC468D98850E35CD3265EE/2889" width="200" height="200" alt="沉迷代码"><br></div>
+
+<h2 id="设计原则"><a href="#设计原则" class="headerlink" title="设计原则"></a>设计原则</h2><h3 id="单一职责原则（Single-Responsibility-Principle，-简称是SRP）"><a href="#单一职责原则（Single-Responsibility-Principle，-简称是SRP）" class="headerlink" title="单一职责原则（Single Responsibility Principle， 简称是SRP）"></a>单一职责原则（Single Responsibility Principle， 简称是SRP）</h3><p>老衲是一位粗鄙之人，所以描述也是尽可能的白话哈~  </p>
+<h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>白话单一职责：首先，顾名思义，什么是单一职责？就是某玩意，专门负责某个东西，就譬如说，你的手机屏幕，他就只负责显示，不管显示app还是视频还是小黄书，只要是显示的活，他就干，而且他就只干显示的活，这就是单一职责，那么放到术语里面就是咱们设计的接口或者类，尽量遵循此原则，有什么好处赖？  </p>
+<ul>
+<li>类的复杂性降低， 实现什么职责都有清晰明确的定义</li>
+<li>可读性提高， 复杂性降低， 那当然可读性提高了</li>
+<li>可维护性提高， 可读性提高， 那当然更容易维护了</li>
+<li>变更引起的风险降低， 变更是必不可少的， 如果接口的单一职责做得好， 一个接口修<br>改只对相应的实现类有影响， 对其他的接口无影响， 这对系统的扩展性、 维护性都有非常大<br>的帮助  </li>
+</ul>
+<p>这一波好处摘自设计模式之禅，总结下来就是，看见这个接口所声明的方法，你就知道功能都有什么，初学者或者初接手的人都可以很快融入到代码中进行迭代和维护了。  </p>
+<p>然而道理是这个道理，但是具体在设计代码的时候，还是要考虑到具体的应用下。用书中的话描述就是</p>
+<font color="#FF0000"><br>单一职责原则提出了一个编写程序的标准， 用“职责”或“变化原因”来衡量接口或<br>类设计得是否优良， 但是“职责”和“变化原因”都是不可度量的， 因项目而异， 因环境而异<br></font>  
 
 <h4 id="code"><a href="#code" class="headerlink" title="code"></a>code</h4><p>OK，结合上面说的小Demo，接下来来一杯Java解解渴<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">IScreenDisplay</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * display image on screen</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> image</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">displayImage</span><span class="params">(String image)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * display a text on screen</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> text</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">displayText</span><span class="params">(String text)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * display a video on screen</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> video</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">displayVideo</span><span class="params">(String video)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>上来就是我们的小接口，屏幕显示，干什么玩意呢？自行翻译不谢~  </p>
@@ -361,7 +374,7 @@
 <li>降低代码的灵活性。子类必须拥有父类的属性和方法，让子类自由的世界中多了些约束</li>
 <li>增强了耦合性。当父类的常量、变量和方法被修改时，需要考虑子类的修改，而且在缺乏规范的环境下，这种修改可能带来非常糟糕的结果——大段的代码需要重构</li>
 </ul>
-<h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><ul>
+<h4 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h4><ul>
 <li>看不懂，绕口定义：    <blockquote>
 <p>If for each object o1 of type S there is an object o2 oftype T such that for all programs P defined in terms of T,the behavior of P is unchanged when o1 issubstituted for o2 then S is a subtype of T.（如果对每一个类型为S的对象o1， 都有类型为T的对象o2， 使得以T定义的所有程序P在所有的对象o1都代换成o2时， 程序P的行为没有发生变<br>化， 那么类型S是类型T的子类型。 ）  </p>
 </blockquote>
@@ -472,7 +485,7 @@
 <li>了解环境，拒绝盲从。每个项目或产品都有特定的环境因素，别看到大师是这样做的你就照抄。千万别，环境不同，接口拆分的标准就不同。深入了解业务逻辑</li>
 </ul>
 <h3 id="迪米特法则（Law-of-Demeter，-LoD）"><a href="#迪米特法则（Law-of-Demeter，-LoD）" class="headerlink" title="迪米特法则（Law of Demeter， LoD）"></a>迪米特法则（Law of Demeter， LoD）</h3><p>迪米特法则主要表达的是当类与类之间产生耦合的情况下，类对外公布的方法将遵循怎样的规则，其实说白了就是当前类持有的耦合类，那么当前类只关心自己要调用的方法，具体内部有怎样的实现则不关心，这些不关心的方法或者变量都与我无关，这样写有什么好处呢？相当于以后当实现逻辑发生了变化，但是结果不变，我们只需要更改耦合类的内部实现即可，外部无需改动，就是private,protect等修饰符的使用~  </p>
-<h4 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h4><p>一个对象应该对其他对象有最少的了解。通俗地讲，</p>
+<h4 id="定义-2"><a href="#定义-2" class="headerlink" title="定义"></a>定义</h4><p>一个对象应该对其他对象有最少的了解。通俗地讲，</p>
 <font color="#FF0000"><br>一个类应该对自己需要耦合或调用的类知道得最少，你（被耦合或调用的类）的内部是如何复杂都和我没关系，那是你的事情，我就知道你提供的这么多public方法，我就调用这么多，其他的我一概不关心。<br></font>  
 
 <p>类之间的低耦合要求：</p>
@@ -729,7 +742,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#设计模式基础-关键-重要-备用"><span class="nav-number">1.</span> <span class="nav-text">设计模式基础 关键 重要 备用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#code"><span class="nav-number">1.0.1.</span> <span class="nav-text">code</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#里氏替换原则（LiskovSubstitution-Principle，-LSP）"><span class="nav-number">1.1.</span> <span class="nav-text">里氏替换原则（LiskovSubstitution Principle， LSP）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定义"><span class="nav-number">1.1.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#code-1"><span class="nav-number">1.1.2.</span> <span class="nav-text">code</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#依赖倒置原则（Dependence-Inversion-Principle-DIP）"><span class="nav-number">1.2.</span> <span class="nav-text">依赖倒置原则（Dependence Inversion Principle,DIP）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#code-2"><span class="nav-number">1.2.1.</span> <span class="nav-text">code</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接口隔离原则-Interface-Splite-Principle"><span class="nav-number">1.3.</span> <span class="nav-text">接口隔离原则(Interface Splite Principle)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#code-3"><span class="nav-number">1.3.1.</span> <span class="nav-text">code</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迪米特法则（Law-of-Demeter，-LoD）"><span class="nav-number">1.4.</span> <span class="nav-text">迪米特法则（Law of Demeter， LoD）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定义-1"><span class="nav-number">1.4.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#code-4"><span class="nav-number">1.4.2.</span> <span class="nav-text">code</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#设计模式基础-关键-重要-备用"><span class="nav-number">1.</span> <span class="nav-text">设计模式基础 关键 重要 备用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计原则"><span class="nav-number">2.</span> <span class="nav-text">设计原则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#单一职责原则（Single-Responsibility-Principle，-简称是SRP）"><span class="nav-number">2.1.</span> <span class="nav-text">单一职责原则（Single Responsibility Principle， 简称是SRP）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定义"><span class="nav-number">2.1.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#code"><span class="nav-number">2.1.2.</span> <span class="nav-text">code</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#里氏替换原则（LiskovSubstitution-Principle，-LSP）"><span class="nav-number">2.2.</span> <span class="nav-text">里氏替换原则（LiskovSubstitution Principle， LSP）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定义-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#code-1"><span class="nav-number">2.2.2.</span> <span class="nav-text">code</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#依赖倒置原则（Dependence-Inversion-Principle-DIP）"><span class="nav-number">2.3.</span> <span class="nav-text">依赖倒置原则（Dependence Inversion Principle,DIP）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#code-2"><span class="nav-number">2.3.1.</span> <span class="nav-text">code</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接口隔离原则-Interface-Splite-Principle"><span class="nav-number">2.4.</span> <span class="nav-text">接口隔离原则(Interface Splite Principle)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#code-3"><span class="nav-number">2.4.1.</span> <span class="nav-text">code</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迪米特法则（Law-of-Demeter，-LoD）"><span class="nav-number">2.5.</span> <span class="nav-text">迪米特法则（Law of Demeter， LoD）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定义-2"><span class="nav-number">2.5.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#code-4"><span class="nav-number">2.5.2.</span> <span class="nav-text">code</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
