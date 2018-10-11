@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="设计模式————工厂模式工厂模式真心是一个老生常谈的话题了，都已经馊了。。。同时也衍生出很多耳熟能详的XX工厂模式，下面咱们就来学习下这个馊厂模式。 定义惯例搬运：Define an interface for creating an object,but let subclasses decide which class to instantiate.Factory Method lets a">
+<meta name="keywords" content="done blog android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式————工厂">
+<meta property="og:url" content="http://yoursite.com/2018/10/11/设计模式————工厂/index.html">
+<meta property="og:site_name" content="Done blog">
+<meta property="og:description" content="设计模式————工厂模式工厂模式真心是一个老生常谈的话题了，都已经馊了。。。同时也衍生出很多耳熟能详的XX工厂模式，下面咱们就来学习下这个馊厂模式。 定义惯例搬运：Define an interface for creating an object,but let subclasses decide which class to instantiate.Factory Method lets a">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-10-11T12:27:50.212Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="设计模式————工厂">
+<meta name="twitter:description" content="设计模式————工厂模式工厂模式真心是一个老生常谈的话题了，都已经馊了。。。同时也衍生出很多耳熟能详的XX工厂模式，下面咱们就来学习下这个馊厂模式。 定义惯例搬运：Define an interface for creating an object,but let subclasses decide which class to instantiate.Factory Method lets a">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/10/11/设计模式————工厂/"/>
+
+
+
+
+
+  <title>设计模式————工厂 | Done blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Done blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/11/设计模式————工厂/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Done">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/timg_2.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Done blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">设计模式————工厂</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-11T20:27:29+08:00">
+                2018-10-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="设计模式————工厂模式"><a href="#设计模式————工厂模式" class="headerlink" title="设计模式————工厂模式"></a>设计模式————工厂模式</h2><p>工厂模式真心是一个老生常谈的话题了，都已经馊了。。。同时也衍生出很多耳熟能详的XX工厂模式，下面咱们就来学习下这个馊厂模式。</p>
+<h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>惯例搬运：<br>Define an interface for creating an object,but let subclasses decide which class to instantiate.Factory Method lets a class defer instantiation to subclasses<br>定义一个用于创建对象的接口，让子类决定实例化哪一个类。工厂方法使一个类的实例化延迟到其子类。  </p>
+<p>白话：<br>这里的抽象接口也可以看做是抽象方法或者接口，不用在意文字的字面意思，相当于对外公开一个功能，而这个功能就是new对象，而要实例化出来的对象是什么对象，工厂本身不管，上层自然指挥你该干啥就干啥，只负责索要和持有这个抽象的对象接口  </p>
+<p>通用的工厂写法思路：  </p>
+<font color="#FF0000"><br>1. 定义抽象的产品（对象）接口或是抽象类<br>2. 定义抽象工厂，定义产生实例的抽象方法，具体参数自定义，返回抽象产品（对象）<br>3. 定义具体的工厂类，继承抽象工厂类，写具体实现代码<br>4. 定义具体的产品类，实现相关的方法<br><br></font>
+
+<h3 id="code"><a href="#code" class="headerlink" title="code"></a>code</h3><p>好了，接下来就是结合实例来完成上面的4个步骤，codeing~  </p>
+<p>写代码之前，先介绍一下咱们的代码背景。老惯例，XX荣耀，先来一波英雄的基础设定，英雄都什么类型？除了男女外- - 当然是属性啊，主物理还是主AP（尼玛AP怎么说，魔法伤害？）  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IHero</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * hero type magic or physical?</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">String <span class="title">getType</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * attack by magic or physical</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">attack</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">具体含义请参阅老衲蹩脚的注释，谢谢~  </span><br><span class="line">然后是第二步，抽象工厂，很简单，就定义一个产生产品（对象）的抽象方法  </span><br><span class="line"></span><br><span class="line">```java</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">AbsHeroFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> &lt;HERO extends IHero&gt; <span class="function">HERO <span class="title">createHero</span><span class="params">(Class hero)</span></span>;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来是定义具体的工厂类，集成上面的抽象工厂，实现抽象方法，说白了就是实例化子类对象  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">HeroFactory</span> <span class="keyword">extends</span> <span class="title">AbsHeroFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> &lt;HERO extends IHero&gt; <span class="function">HERO <span class="title">createHero</span><span class="params">(Class hero)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Constructor declaredConstructor = hero.getDeclaredConstructor();</span><br><span class="line">            declaredConstructor.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">            IHero iHero = (IHero) declaredConstructor.newInstance();</span><br><span class="line">            <span class="keyword">return</span> (HERO) iHero;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchMethodException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InstantiationException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassCastException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InvocationTargetException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">最后就是咱们的英雄对象了，先来个鲁班？  </span><br><span class="line"></span><br><span class="line">```java</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">LuBan</span> <span class="keyword">implements</span> <span class="title">IHero</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getType</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> ATTACK_PHYSICAL;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">attack</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"yi dun luan pen, zao cheng ATTACK PHYSICAL shang hai:10000"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"i am "</span> + ATTACK_PHYSICAL + <span class="string">" AD-Carry"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">一个ADC不够，再来个AP？  </span><br><span class="line"></span><br><span class="line">```java</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">XiaoQiao</span> <span class="keyword">implements</span> <span class="title">IHero</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getType</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> ATTACK_MAGIC;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">attack</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"yi dun luan pao, zao cheng ATTACK MAGIC shang hai:10000"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"i am "</span> + ATTACK_MAGIC + <span class="string">" AP-Carry"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">main()&#123;</span><br><span class="line">    HeroFactory heroFactory = <span class="keyword">new</span> HeroFactory();</span><br><span class="line">    IHero luBan = heroFactory.createHero(LuBan.class);</span><br><span class="line">    IHero xiaoQiao = heroFactory.createHero(XiaoQiao.class);</span><br><span class="line">    System.out.println(luBan.toString());</span><br><span class="line">    luBan.attack();</span><br><span class="line">    System.out.println(xiaoQiao.toString());</span><br><span class="line">    xiaoQiao.attack();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//log</span></span><br><span class="line"><span class="comment">//i am ATTACK_PHYSICAL AD-Carry</span></span><br><span class="line"><span class="comment">//yi dun luan pen, zao cheng ATTACK PHYSICAL shang hai:10000</span></span><br><span class="line"><span class="comment">//i am ATTACK_MAGIC AP-Carry</span></span><br><span class="line"><span class="comment">//yi dun luan pao, zao cheng ATTACK MAGIC shang hai:10000</span></span><br></pre></td></tr></table></figure>
+<p>OK~上面的写法就是通常工厂的写法，特点在哪里？莫名其妙的4个步骤，</p>
+<font color="#FF0000"><br>上层调用者不需要怎么创建对象，通过持有接口对象利用接口对象完成实例化产品（对象）的过程，这样就降低了两个模块之间的耦合，同时来看看扩展性，如果要新增加一个英雄盾山，只需要一个盾山类即可，传入对应类就能拿到对应的盾山英雄对象，工厂无需做任何修改，多爽？不过再写的时候，一定要写好英雄（即产品对象）的抽象接口，最好有一层抽象类来空实现，上层只需要调用英雄接口就能很好的参团了。<br></font>  
+
+<p>下面搬运：  </p>
+<font color="#FF0000"><br>工厂方法模式是典型的解耦框架。高层模块值需要知道产品的抽象类，其他的实现类都不用关心，符合迪米特法则，我不需要的就不要去交流；也符合依赖倒置原则，只依赖产品类的抽象；当然也符合里氏替换原则，使用产品子类替换产品父类<br></font>
+
+
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p>先搬运：  </p>
+<font color="#FF0000"><br>工厂方法模式是new一个对象的替代品，所以在所有需要生成对象的地方都可以使用，但是需要慎重地考虑是否要增加一个工厂类进行管理，增加代码的复杂度。 <br><br>需要灵活的、可扩展的框架时，可以考虑采用工厂方法模式<br></font>
+
+<p>感觉不是很好理解，不存在的，白话来一波~  </p>
+<font color="#FF0000"><br>纯属个人理解，不误人子弟，有错误的地方，欢迎进群指正929891705<br><br><br>凡是new对象的地方，都可以用工厂来替代，那何时用工厂进行替代呢？这么思考，譬如说进行网络请求，那么我们肯定会有一个对象来负责进行网络请求，而网络请求有着不同的应用协议，而他们的功能几乎一致，那么多种协议必然对应着多种对象，这些对象的实例化过程如果放到上层中，那么业务和功能的耦合就会导致后期的迭代维护痛苦不堪，如果上层仅持有功能接口对象，针对不同的协议通过中间件去实例化具体的对象，那么完全不会对既有的逻辑产生任何影响。而这种做法，就是工厂模式要解决的应用场景了<br></font>
+
+<h2 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h2><p>简单工厂其实很简单，省掉上述的步骤2：创建抽象工厂。<br>直接把实体工厂类重写的抽象方法更换成静态方法，这里就直接贴出静态方法的类以及上层调用了<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">HeroFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;HERO extends IHero&gt; <span class="function">HERO <span class="title">createHero</span><span class="params">(Class hero)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Constructor declaredConstructor = hero.getDeclaredConstructor();</span><br><span class="line">            declaredConstructor.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">            IHero iHero = (IHero) declaredConstructor.newInstance();</span><br><span class="line">            <span class="keyword">return</span> (HERO) iHero;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchMethodException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InstantiationException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassCastException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InvocationTargetException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    IHero luBan = HeroFactory.createHero(LuBan.class);</span><br><span class="line">    IHero xiaoQiao = HeroFactory.createHero(XiaoQiao.class);</span><br><span class="line">    System.out.println(luBan.toString());</span><br><span class="line">    luBan.attack();</span><br><span class="line">    System.out.println(xiaoQiao.toString());</span><br><span class="line">    xiaoQiao.attack();</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="comment">//log</span></span><br><span class="line"><span class="comment">//i am ATTACK_PHYSICAL AD-Carry</span></span><br><span class="line"><span class="comment">//yi dun luan pen, zao cheng ATTACK PHYSICAL shang hai:10000</span></span><br><span class="line"><span class="comment">//i am ATTACK_MAGIC AP-Carry</span></span><br><span class="line"><span class="comment">//yi dun luan pao, zao cheng ATTACK MAGIC shang hai:10000</span></span><br></pre></td></tr></table></figure></p>
+<p>具体的讲解就直接搬过来了，很通俗易懂，不过一定要仔细理解哈~</p>
+<font color="#FF0000"><br>该模式是工厂方法模式的弱化，因为简单，所以称为简单工厂模式（Simple Factory Pattern），也叫做静态工厂模式。在实际项目中，采用该方法的案例还是比较多的，其缺点是工厂类的扩展比较困难，不符合开闭原则，但它仍然是一个非常实用的设计模式。<br></font>
+
+<h2 id="多重工厂"><a href="#多重工厂" class="headerlink" title="多重工厂"></a>多重工厂</h2><p>这个命名也是看书得来的，挺想象，直接结合上面的理解就能知道，这种方式的写法其实就是多种工厂，为何要衍生出这种写法呢？  </p>
+<font color="#FF0000"><br>当我们要生产的英雄有各种各样的骚操作怎么办？譬如说有4个技能，带真实伤害的那种如何是好？术语来说就是产片类种类繁多，且各自有不同的实现，那么我们的工厂去实例化这些产品的时候，必然会有很多代码，毕竟只是一次初始化，为了结构清晰，那么我们就把工厂以产品（对象）为单位，拆分出不同的工厂来。为每个产品定义一个创造者， 然后由调用者自己去选择与<br>哪个工厂方法关联<br></font>
+
+<h3 id="code-1"><a href="#code-1" class="headerlink" title="code"></a>code</h3><p>代码还是在原来的基础上进行修改，显而易见，把原来的工厂修改成AD工厂加AP工厂<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ADHeroFactory</span> <span class="keyword">extends</span> <span class="title">AbsHeroFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> &lt;HERO extends IHero&gt; <span class="function">HERO <span class="title">createHero</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (HERO) <span class="keyword">new</span> LuBan();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">APHeroFactory</span> <span class="keyword">extends</span> <span class="title">AbsHeroFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> &lt;HERO extends IHero&gt; <span class="function">HERO <span class="title">createHero</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (HERO) <span class="keyword">new</span> XiaoQiao();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>因为每一个对应的产品（对象）已经有了对应的工厂，所以工厂的抽象类还需要稍微的改动，去掉指定类型的参数了</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">abstract</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">AbsHeroFactory</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> &lt;HERO extends IHero&gt; <span class="function">HERO <span class="title">createHero</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>main跑一下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    IHero luBan = <span class="keyword">new</span> ADHeroFactory().createHero();</span><br><span class="line">    System.out.println(luBan.toString());</span><br><span class="line">    luBan.attack();</span><br><span class="line">    IHero xiaoQiao = <span class="keyword">new</span> APHeroFactory().createHero();</span><br><span class="line">    System.out.println(xiaoQiao.toString());</span><br><span class="line">    xiaoQiao.attack();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>运行结果还是和之前一样，只是写法变了，说白了就是为每个产品定义一个创造者，然后由调用者自己去选择与哪个工厂方法关联。  </p>
+<font color="#FF0000"><br>每一个产品类都对应了一个创建类，好处就是创建类的职责清晰，而且结构简单，但是给可扩展性和可维护性带来了一定的影响如果要扩展一个产品类，就需要建立一个相应的工厂类，这样就增加了扩展的难度。因为工厂类和产品类的数量相同，维护时需要考虑两个对象之间的关系，在复杂的应用中一般采用多工厂的方法，然后再增加一个协调类，避免调用者与各个子工厂交流， 协调类的作用是封装子工厂类， 对高层模块提供统一的访问接口。<br></font>
+
+
+<h2 id="抽象工厂"><a href="#抽象工厂" class="headerlink" title="抽象工厂"></a>抽象工厂</h2><p>对于抽象工厂的白话定义设计模式之禅中作者给出了一个很好的定义，这里就不班门弄斧了，贴过来，大家仔细看仔细品味~  </p>
+<p>不知道大家有没有去过工厂，每个工厂分很多车间，每个车间又分多条生产线，分别生产不同的产品，我们可以把八卦炉比喻为车间，把八卦炉生产的工艺（生产白人、黑人还是黄人）称为生产线，如此来看就是一个女性生产车间，专门生产各种肤色的女性，一个是男性生产车间，专门生产各种肤色男性，生产完毕就可以在系统外组装，什么是组装？嘿嘿，自己思考！在这样的设计下，各个车间和各条生产线的职责非常明确，在车间内各个生产出来的产品可以有耦合关系，你要知道世界上黑、黄、白人种的比例是：1∶4∶6，那这就需要女娲娘娘在烧制的时候就要做好比例分配，在一个车间内协调好。这就是抽象工厂模式</p>
+<h3 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h3><p>Provide an interface for creating families of related or dependent objects without specifyingtheir concrete classes.（为创建一组相关或相互依赖的对象提供一个接口，而且无须指定它们的具体类。  </p>
+<font color="#FF0000"><br>抽象工厂模式是工厂方法模式的升级版本，在有多个业务品种、业务分类时，通过抽象工厂模式产生需要的对象是一种非常好的解决方式。<br></font>
+
+<p>结合通用的工厂写法，抽象相当于是在原有的基础上定义的抽象制定的规则，怎么解释呢。。。就是说要new多少种类的对象，那么就应该对应多少个抽象工厂，而相同种类的对象的数量，则是对应抽象工厂中的抽象方法的数量<br>还是codeing解释比较实在<br>先介绍一下背景，相信大家都或多或少的穿过莆田鞋，或是听说过这个大名鼎鼎的莆田鞋，莆田作为一个历史悠久的制鞋基地，会生产很多很多的鞋，那么这些鞋子根据用途又会有很多分类，这里就只列举两类，运动鞋和皮鞋，而不论什么鞋，都有正品一说，正品好就是正规厂商出品，还有一种就是仿货，所谓的假鞋嘛。<br>那么两种鞋就对应着两种抽象工厂，而假鞋和正品鞋真是我们工厂里面的抽象方法  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 运动鞋</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">abstract</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">AbsSportsShoes</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AbsSportsShoes</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(name + <span class="string">" sport shoes is running fast"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">materail</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 皮鞋</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">abstract</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">AbsLeatherShoes</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AbsLeatherShoes</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">walk</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(name + <span class="string">" leather shoes is walking slowly"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">getColor</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">abstract</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">AbsAShoesFactory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> AbsSportsShoes <span class="title">createASportsShoes</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> AbsLeatherShoes <span class="title">createALeatherShoes</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">abstract</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">AbsRealShoesFactory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> AbsSportsShoes <span class="title">createRealSportsShoes</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> AbsLeatherShoes <span class="title">createRealLeatherShoes</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面四个类就对应着咱们的鞋类抽象产品类和对应的抽象产品，他们的划分则是根据写的品种和档次来进行拆分的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ASportsShoes</span> <span class="keyword">extends</span> <span class="title">AbsSportsShoes</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ASportsShoes</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">materail</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"i use jia cai liao"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">RealSportsShoes</span> <span class="keyword">extends</span> <span class="title">AbsSportsShoes</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RealSportsShoes</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">materail</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"i use real cai liao"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ALeatherShoes</span> <span class="keyword">extends</span> <span class="title">AbsLeatherShoes</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ALeatherShoes</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getColor</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"i am black"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">RealLeatherShoes</span> <span class="keyword">extends</span> <span class="title">AbsLeatherShoes</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RealLeatherShoes</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getColor</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"i am white"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 正品鞋工厂</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">RealShoesFactory</span> <span class="keyword">extends</span> <span class="title">AbsRealShoesFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> AbsSportsShoes <span class="title">createRealSportsShoes</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> RealSportsShoes(<span class="string">"real sport shoes"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> AbsLeatherShoes <span class="title">createRealLeatherShoes</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> RealLeatherShoes(<span class="string">"real leather shoes"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 假鞋工厂</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">AShoesFactory</span> <span class="keyword">extends</span> <span class="title">AbsAShoesFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> AbsSportsShoes <span class="title">createASportsShoes</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ASportsShoes(<span class="string">"adidasi"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> AbsLeatherShoes <span class="title">createALeatherShoes</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ALeatherShoes(<span class="string">"belee"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码就是正品运动鞋和正品皮鞋的实现类以及假鞋的实现类，加上实际工厂的实现类。类数量很多，但是条理清晰，接下来我们是我们的run+console<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    AShoesFactory aShoesFactory = <span class="keyword">new</span> AShoesFactory();</span><br><span class="line">    AbsSportsShoes aSportsShoes = aShoesFactory.createASportsShoes();</span><br><span class="line">    aSportsShoes.materail();</span><br><span class="line">    aSportsShoes.run();</span><br><span class="line">    AbsLeatherShoes aLeatherSHoes = aShoesFactory.createALeatherShoes();</span><br><span class="line">    aLeatherSHoes.getColor();</span><br><span class="line">    aLeatherSHoes.walk();</span><br><span class="line"></span><br><span class="line">    RealShoesFactory realShoesFactory = <span class="keyword">new</span> RealShoesFactory();</span><br><span class="line">    AbsSportsShoes realSportsShoes = realShoesFactory.createRealSportsShoes();</span><br><span class="line">    realSportsShoes.materail();</span><br><span class="line">    realSportsShoes.run();</span><br><span class="line">    AbsLeatherShoes realLeatherShoes = realShoesFactory.createRealLeatherShoes();</span><br><span class="line">    realLeatherShoes.getColor();</span><br><span class="line">    realLeatherShoes.walk();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//log</span></span><br><span class="line"><span class="comment">//i use jia cai liao</span></span><br><span class="line"><span class="comment">//adidasi sport shoes is running fast</span></span><br><span class="line"><span class="comment">//i am black</span></span><br><span class="line"><span class="comment">//belee leather shoes is walking slowly</span></span><br><span class="line"><span class="comment">//i use real cai liao</span></span><br><span class="line"><span class="comment">//real sport shoes sport shoes is running fast</span></span><br><span class="line"><span class="comment">//i am white</span></span><br><span class="line"><span class="comment">//real leather shoes leather shoes is walking slowly</span></span><br></pre></td></tr></table></figure></p>
+<p>条理清晰的上层调用代码，上层并不关系实现类的实现，只负责持有接口和调用。没有任何一个方法与实现类有关系，对于一个产品来说，我们只要知道它的工厂方法就可以直接产生一个产品对象，无须关心它的实现类  </p>
+<p>抽象工厂的优点：  </p>
+<ul>
+<li>封装性，高层模块只需要持有功能模块的抽象接口，完全不需要关心功能模块的具体实现，由工厂来负责创建抽象的实现类对象，实现上下层的解耦</li>
+<li>产品（对象）之间的约束不对上层公开，上层纯关心应用之间的业务，而工厂作为维护下层产品间的约束关系的中间件  </li>
+</ul>
+<p>抽象工厂的缺点：  </p>
+<ul>
+<li>产品族扩展困难，抽象工厂的抽象方法数量由产品族的数量决定，这样在进行扩展的时候原本的工厂实现类就必须统统实现一遍新增加的接口<font color="#FF0000"><br>抽象类和接口是一个契约。改变契约，所有与契约有关系的代码都要修改<br></font>
+
+
+</li>
+</ul>
+<h3 id="使用场景-1"><a href="#使用场景-1" class="headerlink" title="使用场景"></a>使用场景</h3><p>惯例贴上：<br>一个对象族（或是一组没有任何关系的对象）都有相同的约束，则可以使用抽象工厂模式。那么什么是对象族？其实就是同一类别下具有各自实现的产品，笼统举个例子就好比家禽，鸡，鸭，鹅之类就是在家禽族中的成员，他们是同级的，而他们的外貌啊，肉质这些则不一样，有着各自的实现，无论什么实现，肉都是用来吃，外貌用来辨别，此等意义是一样的。</p>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>这里就直接搬过来了，很通俗易懂</p>
+<font color="#FF0000"><br>在抽象工厂模式的缺点中，我们提到抽象工厂模式的产品族扩展比较困难，但是一定要清楚，是产品族扩展困难，而不是产品等级。在该模式下，产品等级是非常容易扩展的，增加一个产品等级，只要增加一个工厂类负责新增加出来的产品生产任务即可。也就是说横向扩展容易，纵向扩展困难。<br></font>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>老衲再次化点缘，谢谢各位看客大佬了</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/pay_wx.png" alt="Done 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/pay_ali.png" alt="Done 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/09/Basic-Pattern/" rel="next" title="设计模式基础">
+                <i class="fa fa-chevron-left"></i> 设计模式基础
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/timg_2.gif"
+                alt="Done" />
+            
+              <p class="site-author-name" itemprop="name">Done</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/DoneMr" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/u012402505" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-globe"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#设计模式————工厂模式"><span class="nav-number">1.</span> <span class="nav-text">设计模式————工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">1.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code"><span class="nav-number">1.2.</span> <span class="nav-text">code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用场景"><span class="nav-number">1.3.</span> <span class="nav-text">使用场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单工厂模式"><span class="nav-number">2.</span> <span class="nav-text">简单工厂模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多重工厂"><span class="nav-number">3.</span> <span class="nav-text">多重工厂</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#code-1"><span class="nav-number">3.1.</span> <span class="nav-text">code</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#抽象工厂"><span class="nav-number">4.</span> <span class="nav-text">抽象工厂</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义-1"><span class="nav-number">4.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用场景-1"><span class="nav-number">4.2.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意事项"><span class="nav-number">4.3.</span> <span class="nav-text">注意事项</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Done</span>
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+
