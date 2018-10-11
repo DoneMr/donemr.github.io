@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="设计模式————工厂模式工厂模式真心是一个老生常谈的话题了，都已经馊了。。。同时也衍生出很多耳熟能详的XX工厂模式，下面咱们就来学习下这个馊厂模式。 定义惯例搬运：Define an interface for creating an object,but let subclasses decide which class to instantiate.Factory Method lets a">
+<meta name="description" content="设计模式————工厂模式工厂模式真心是一个老生常谈的话题了，都已经馊了。。。同时也衍生出很多耳熟能详的XX工厂模式，下面咱们就来学习下这个馊厂模式。 如果您对Android开发感兴趣，或者也是正在学习的路人，可以加群一起交流~ 群号：929891705    定义惯例搬运：Define an interface for creating an object,but let subclasses d">
 <meta name="keywords" content="java,desgin pattern,factory">
 <meta property="og:type" content="article">
 <meta property="og:title" content="设计模式——工厂">
 <meta property="og:url" content="http://yoursite.com/2018/10/11/设计模式——工厂/index.html">
 <meta property="og:site_name" content="Done blog">
-<meta property="og:description" content="设计模式————工厂模式工厂模式真心是一个老生常谈的话题了，都已经馊了。。。同时也衍生出很多耳熟能详的XX工厂模式，下面咱们就来学习下这个馊厂模式。 定义惯例搬运：Define an interface for creating an object,but let subclasses decide which class to instantiate.Factory Method lets a">
+<meta property="og:description" content="设计模式————工厂模式工厂模式真心是一个老生常谈的话题了，都已经馊了。。。同时也衍生出很多耳熟能详的XX工厂模式，下面咱们就来学习下这个馊厂模式。 如果您对Android开发感兴趣，或者也是正在学习的路人，可以加群一起交流~ 群号：929891705    定义惯例搬运：Define an interface for creating an object,but let subclasses d">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-11T12:33:15.527Z">
+<meta property="og:updated_time" content="2018-10-11T12:36:08.727Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式——工厂">
-<meta name="twitter:description" content="设计模式————工厂模式工厂模式真心是一个老生常谈的话题了，都已经馊了。。。同时也衍生出很多耳熟能详的XX工厂模式，下面咱们就来学习下这个馊厂模式。 定义惯例搬运：Define an interface for creating an object,but let subclasses decide which class to instantiate.Factory Method lets a">
+<meta name="twitter:description" content="设计模式————工厂模式工厂模式真心是一个老生常谈的话题了，都已经馊了。。。同时也衍生出很多耳熟能详的XX工厂模式，下面咱们就来学习下这个馊厂模式。 如果您对Android开发感兴趣，或者也是正在学习的路人，可以加群一起交流~ 群号：929891705    定义惯例搬运：Define an interface for creating an object,but let subclasses d">
 
 
 
@@ -323,6 +323,8 @@
 
       
         <h2 id="设计模式————工厂模式"><a href="#设计模式————工厂模式" class="headerlink" title="设计模式————工厂模式"></a>设计模式————工厂模式</h2><p>工厂模式真心是一个老生常谈的话题了，都已经馊了。。。同时也衍生出很多耳熟能详的XX工厂模式，下面咱们就来学习下这个馊厂模式。</p>
+<font color="#FF0000"><br>如果您对Android开发感兴趣，或者也是正在学习的路人，可以加群一起交流~ 群号：929891705<br></font>  
+
 <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>惯例搬运：<br>Define an interface for creating an object,but let subclasses decide which class to instantiate.Factory Method lets a class defer instantiation to subclasses<br>定义一个用于创建对象的接口，让子类决定实例化哪一个类。工厂方法使一个类的实例化延迟到其子类。  </p>
 <p>白话：<br>这里的抽象接口也可以看做是抽象方法或者接口，不用在意文字的字面意思，相当于对外公开一个功能，而这个功能就是new对象，而要实例化出来的对象是什么对象，工厂本身不管，上层自然指挥你该干啥就干啥，只负责索要和持有这个抽象的对象接口  </p>
 <p>通用的工厂写法思路：  </p>
