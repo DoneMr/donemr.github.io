@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="设计模式——模版方法模式这个模式名字也许听起来很陌生，看完之后你会发现自己老早就用过了。。。相信大家等老衲介绍完也会发现，尼玛说的那么高大上，其实也就那么回事~   定义惯例上白话，以我自己为例，原来做个一个BLE相关的需求，具体需求是这样的，需要对外给客户提供一个和产品连接的接口，说白了就是一个connect的接口，那么有连接必然有断开连接，发送数据，回调接收数据等等。然而真正的连接其实还需要和">
+<meta name="description" content="设计模式——模版方法模式这个模式名字也许听起来很陌生，看完之后你会发现自己老早就用过了。。。相信大家等老衲介绍完也会发现，尼玛说的那么高大上，其实也就那么回事~   如果您对Android开发感兴趣，或者也是正在学习的路人，可以加群一起交流~ 群号：929891705    定义惯例上白话，以我自己为例，原来做个一个BLE相关的需求，具体需求是这样的，需要对外给客户提供一个和产品连接的接口，说白了">
 <meta name="keywords" content="java,Template Method,模版方法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="设计模式——模版方法">
 <meta property="og:url" content="http://yoursite.com/2018/10/12/设计模式——模版方法/index.html">
 <meta property="og:site_name" content="Done blog">
-<meta property="og:description" content="设计模式——模版方法模式这个模式名字也许听起来很陌生，看完之后你会发现自己老早就用过了。。。相信大家等老衲介绍完也会发现，尼玛说的那么高大上，其实也就那么回事~   定义惯例上白话，以我自己为例，原来做个一个BLE相关的需求，具体需求是这样的，需要对外给客户提供一个和产品连接的接口，说白了就是一个connect的接口，那么有连接必然有断开连接，发送数据，回调接收数据等等。然而真正的连接其实还需要和">
+<meta property="og:description" content="设计模式——模版方法模式这个模式名字也许听起来很陌生，看完之后你会发现自己老早就用过了。。。相信大家等老衲介绍完也会发现，尼玛说的那么高大上，其实也就那么回事~   如果您对Android开发感兴趣，或者也是正在学习的路人，可以加群一起交流~ 群号：929891705    定义惯例上白话，以我自己为例，原来做个一个BLE相关的需求，具体需求是这样的，需要对外给客户提供一个和产品连接的接口，说白了">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-15T02:32:02.998Z">
+<meta property="og:updated_time" content="2018-10-15T02:33:53.905Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式——模版方法">
-<meta name="twitter:description" content="设计模式——模版方法模式这个模式名字也许听起来很陌生，看完之后你会发现自己老早就用过了。。。相信大家等老衲介绍完也会发现，尼玛说的那么高大上，其实也就那么回事~   定义惯例上白话，以我自己为例，原来做个一个BLE相关的需求，具体需求是这样的，需要对外给客户提供一个和产品连接的接口，说白了就是一个connect的接口，那么有连接必然有断开连接，发送数据，回调接收数据等等。然而真正的连接其实还需要和">
+<meta name="twitter:description" content="设计模式——模版方法模式这个模式名字也许听起来很陌生，看完之后你会发现自己老早就用过了。。。相信大家等老衲介绍完也会发现，尼玛说的那么高大上，其实也就那么回事~   如果您对Android开发感兴趣，或者也是正在学习的路人，可以加群一起交流~ 群号：929891705    定义惯例上白话，以我自己为例，原来做个一个BLE相关的需求，具体需求是这样的，需要对外给客户提供一个和产品连接的接口，说白了">
 
 
 
@@ -323,6 +323,8 @@
 
       
         <h1 id="设计模式——模版方法模式"><a href="#设计模式——模版方法模式" class="headerlink" title="设计模式——模版方法模式"></a>设计模式——模版方法模式</h1><p>这个模式名字也许听起来很陌生，看完之后你会发现自己老早就用过了。。。相信大家等老衲介绍完也会发现，尼玛说的那么高大上，其实也就那么回事~  </p>
+<font color="#FF0000"><br>如果您对Android开发感兴趣，或者也是正在学习的路人，可以加群一起交流~ 群号：929891705<br></font>  
+
 <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>惯例上白话，以我自己为例，原来做个一个BLE相关的需求，具体需求是这样的，需要对外给客户提供一个和产品连接的接口，说白了就是一个connect的接口，那么有连接必然有断开连接，发送数据，回调接收数据等等。然而真正的连接其实还需要和设备进行通信，握手等一系列骚操作，发送数据也是一样的，需要等设备回复收到的响应才行，同时要对数据做一层加密处理，然而这些外部都不需要考虑，外部只需要考虑传递数据的明文即可。就酱，就是所谓的模版方法模式，尼玛，一脸懵13…  </p>
 <font color="#FF0000"><br>Define the skeleton of an algorithm in an operation,deferring some steps to subclasses.Template Method lets subclasses redefine certain steps of an algorithm without changing the algorithm’s structure.（定义一个操作中的算法的框架，而将一些步骤延迟到子类中。使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。）<br></font>
 
@@ -568,7 +570,7 @@
           
           
 
-          
+          <script type="text/javascript" src="http://tajs.qq.com/stats?sId=66068266" charset="UTF-8"></script>
 
         </div>
       </section>
@@ -637,6 +639,15 @@
 
 
 
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=66068266";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
