@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,组件化," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一个软件系统的开发可能只需要2到3个月就能完成，而这个系统的迭代和维护时间可能达2到3年之久——《不记得哪本书上说的》      Android移动端项目经过长时间的迭代和维护，代码经手不同的人，产生冗余和规范问题也是一件不可避免的事情，而单工程的架构在面对这样的情况更是心有余而力不足，组件化也正是针对此类场景衍生出来的技术手段特点组件化最明显的两个优势：代码解耦和并行开发。通过不同维度和应用环境">
+<meta name="keywords" content="Android,组件化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android组件化实践">
+<meta property="og:url" content="http://yoursite.com/2019/05/05/Android组件化实践/index.html">
+<meta property="og:site_name" content="Done blog">
+<meta property="og:description" content="一个软件系统的开发可能只需要2到3个月就能完成，而这个系统的迭代和维护时间可能达2到3年之久——《不记得哪本书上说的》      Android移动端项目经过长时间的迭代和维护，代码经手不同的人，产生冗余和规范问题也是一件不可避免的事情，而单工程的架构在面对这样的情况更是心有余而力不足，组件化也正是针对此类场景衍生出来的技术手段特点组件化最明显的两个优势：代码解耦和并行开发。通过不同维度和应用环境">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2822814-29f5b4fd4961dac0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2822814-9278a9ae9a0be146.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2822814-608ff206e85e2693.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2822814-5a09954c07b445f4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2822814-9278a9ae9a0be146.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2822814-5dac87fba8843af5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2822814-11cd54402d5cc1c9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2822814-90e395877428d7a7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2822814-b0a4b903b36bbffd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-05-05T14:38:33.803Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android组件化实践">
+<meta name="twitter:description" content="一个软件系统的开发可能只需要2到3个月就能完成，而这个系统的迭代和维护时间可能达2到3年之久——《不记得哪本书上说的》      Android移动端项目经过长时间的迭代和维护，代码经手不同的人，产生冗余和规范问题也是一件不可避免的事情，而单工程的架构在面对这样的情况更是心有余而力不足，组件化也正是针对此类场景衍生出来的技术手段特点组件化最明显的两个优势：代码解耦和并行开发。通过不同维度和应用环境">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/2822814-29f5b4fd4961dac0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/05/Android组件化实践/"/>
+
+
+
+
+
+  <title>Android组件化实践 | Done blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Done blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/05/Android组件化实践/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Done">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/timg_2.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Done blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android组件化实践</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-05T22:37:07+08:00">
+                2019-05-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>一个软件系统的开发可能只需要2到3个月就能完成，而这个系统的迭代和维护时间可能达2到3年之久——《不记得哪本书上说的》     </p>
+<h2 id="Android移动端项目经过长时间的迭代和维护，代码经手不同的人，产生冗余和规范问题也是一件不可避免的事情，而单工程的架构在面对这样的情况更是心有余而力不足，组件化也正是针对此类场景衍生出来的技术手段"><a href="#Android移动端项目经过长时间的迭代和维护，代码经手不同的人，产生冗余和规范问题也是一件不可避免的事情，而单工程的架构在面对这样的情况更是心有余而力不足，组件化也正是针对此类场景衍生出来的技术手段" class="headerlink" title="Android移动端项目经过长时间的迭代和维护，代码经手不同的人，产生冗余和规范问题也是一件不可避免的事情，而单工程的架构在面对这样的情况更是心有余而力不足，组件化也正是针对此类场景衍生出来的技术手段"></a>Android移动端项目经过长时间的迭代和维护，代码经手不同的人，产生冗余和规范问题也是一件不可避免的事情，而单工程的架构在面对这样的情况更是心有余而力不足，组件化也正是针对此类场景衍生出来的技术手段</h2><h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><p>组件化最明显的两个优势：<code>代码解耦</code>和<code>并行开发</code>。通过不同维度和应用环境下进行不同程度的拆分，达到组件灵活配置，增加开发效率的目的。  所以细化来说，组件化就是根据功能和业务来拆分module，最后module组成模块，而后模块组装成应用。<br><img src="https://upload-images.jianshu.io/upload_images/2822814-29f5b4fd4961dac0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="组件化基础架构.png"></p>
+<p>应用入口：该层其实只是一个空壳，用来存放启动页面，同时依赖所有业务组件，从这里开始，便是全量应用的起始位置。  </p>
+<p>应用业务组件：根据不同业务横向拆分出来的业务组件，任何一个业务组件都可以独立出来成为一个应用存在，有完整的应用周期，这些组件是横向拆分出来的，所以他们之间并不存在依赖关系。  </p>
+<p>通用业务功能组件：<code>通用业务</code>其实相当用这类业务是从应用业务中抽取出来的并集，从应用上说，他属于业务，而针对应用业务而言则更像是一种<code>功能</code>，好比登录这种<code>业务功能</code>，不需要关心有没有界面，当中是怎样的逻辑，只需要提供结果即可，如有必要，中间的过程也可以通过回调的方式向外部暴露出来。  </p>
+<p>支撑服务组件接口：通用业务组件对外声明的功能接口抽取放到该层，可以说通用业务功能组件就是这层接口的实现者，同时考虑到应用业务通用代码的抽取，带业务属性的Base也可以放到该层。该层的接口抽取也可以理解这里是Module依赖的一种妥协，当同样层级的两个通用功能组件需要互相通信的时候，如果没有抽取一层公共的接口层出来，就会造成你中有我我中有你的尴尬局面，破坏了组件化解耦项目的初衷。</p>
+<p>功能支撑：项目中用到的诸如网络请求，图片加载，依赖的第三方和XXUtils等通用纯Feature代码就可以放到这里，是以上每层代码的功能支撑，尤为重要，同时对部分通用View的封装也可以放到这里供上层使用。</p>
+<p>每层的横向拆分模块之间是没有任何的依赖关系的，如果要做到相互之间的通信或是页面的跳转，那么就需要提供一个路由来作为组件间通信的桥梁。</p>
+<p>综上所述，一个简单的组件化工程结构就出来了，说白了就是多Module开发而已<br><img src="https://upload-images.jianshu.io/upload_images/2822814-9278a9ae9a0be146.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="组件化工程目录.png"></p>
+<h3 id="代码解耦"><a href="#代码解耦" class="headerlink" title="代码解耦"></a>代码解耦</h3><p>代码解耦主要是从两个方面，其一是公共代码的抽取和归纳，其二是面向接口编程，接口下沉。  </p>
+<p>譬如说日期序列化方法，获取字符串中的年月日，对外获取日期字符串和format格式即可，<code>常看到的XXUtils便是常用的代码抽取方式，上层只关心结果，不关心具体的实现逻辑</code>这是一种简单的减少代码冗余方式。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Date <span class="title">serializeDate</span><span class="params">(String dateString, String dateFormat)</span></span>;</span><br><span class="line">```  </span><br><span class="line">而代码解耦其实与这种方式类似，只不过所调用的静态方法变成了一个接口</span><br><span class="line">```java</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">DateSerializable</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">serializeDate</span><span class="params">(String dateString, String dateFormat)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上层去持有这个接口，而不是一个具体的类，通过实例化对应的实现来获得具有能力的实例来进行业务，那么当底层发生了改变或是实现的时候，上层只需要实例化对应的新实现类即可，如果把这层实例化也作为接口去作，那么上层完全不用改变就能拥抱变化，遵循设计原则去设计具体的应用和功能代码</p>
+<h4 id="依赖注入"><a href="#依赖注入" class="headerlink" title="依赖注入"></a>依赖注入</h4><p>继续深入之后就是面向接口编程，上层与下层之间的通信以及下层提供能力的媒介以接口的形式存在，这样后期实现的改变可以更换不同的实现类即可，上层几乎不需要做任何的改动。对于能够提供通用能力与业务没有直接关系的Feature接口应尽量下沉到底层。    </p>
+<p>而横向的业务代码或者功能实现可以进行依赖注入的方式来达到解耦的目。</p>
+<p>依赖注入简单示例<br>类比程序员ICoder，提供一个coding的能力<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">interface</span> <span class="title">ICoder</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">coding</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>而后提供一个工作者的类，由工作者来持有coding这项技能，如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Worker</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> ICoder mCoder;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Worker</span><span class="params">(ICoder coder)</span></span>&#123;</span><br><span class="line">		mCoder = coder;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">working</span><span class="params">()</span></span>&#123;</span><br><span class="line">		mCoder.coding();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>显而易见，工作者内部持有一个ICoder这样的一个对象，而这个对象则是<code>通过构造传递进来</code>，这样的方式便能称之为依赖注入Di（Dependency injection）  </p>
+<p>完善接下来的代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Javaer</span> <span class="keyword">implements</span> <span class="title">ICoder</span></span>&#123;</span><br><span class="line">  		</span><br><span class="line">  	<span class="meta">@Override</span></span><br><span class="line">  	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">coding</span><span class="params">()</span></span>&#123;</span><br><span class="line">  		System.out.println(<span class="string">"i am java coder, code for java"</span>);</span><br><span class="line">  	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Pythoner</span> <span class="keyword">implements</span> <span class="title">ICoder</span> </span>&#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">  	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">coding</span><span class="params">()</span></span>&#123;</span><br><span class="line">  		System.out.println(<span class="string">"i am python coder, code for python"</span>);</span><br><span class="line">  	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>创建两个实现coding能力的类，分为Java开发和Python开发，现在就相当于公司有两个程序员，他们分别是Java和Python，当来活的时候，可以甩锅到这两位同僚身上。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	Worker worker = <span class="keyword">new</span> Worker(<span class="keyword">new</span> Javaer());</span><br><span class="line">	worker.working();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到工作者持有的能力由外部赋值进去，工作者内部需要持有对这层工作能力的接口。  </p>
+<p>上面依赖注入的方式就是一个控制反转Ioc（Inversion of control）的例子：由程序内部定制规则，外部传递遵循了内部规则的实现。</p>
+<h3 id="结构解耦"><a href="#结构解耦" class="headerlink" title="结构解耦"></a>结构解耦</h3><p>结构的解耦其实一般针对应用的整体业务而言进行的一个”分Module”操作，根据业务类型的横向拆分，业务属性的纵向拆分以及功能SDK下沉。<br>古老的开发套路一般都会将Feature相关的代码单独作为一个Module进行依赖，然后上层的应用和业务写到APP中去。<br><img src="https://upload-images.jianshu.io/upload_images/2822814-608ff206e85e2693.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="一般工程结构.png"><br>这是最常见的操作，通过抽取常用的功能代码，做上简单的封装，抽取到一个公共库中，在编写具体界面或者业务是可以直接拿来用。  </p>
+<p>而我们组件化的操作，则在此基础上做一个更加<code>细粒度</code>的抽取，根据功能或是业务来进行<code>横向拆分</code>和<code>纵向排序</code>。</p>
+<h4 id="横向拆分"><a href="#横向拆分" class="headerlink" title="横向拆分"></a>横向拆分</h4><p>横向就是对类别不同的模块做一个拆分，对应的就是业务类模块，功能类模块，而具体细化下来就负责业务的<br>Business类模块：businessA、businessB…<br>基础业务功能模块：login、share、welcome…<br>支撑功能类模块：baseUI、commonLib…  </p>
+<h4 id="纵向排序"><a href="#纵向排序" class="headerlink" title="纵向排序"></a>纵向排序</h4><p>而纵向排序就是对横向拆分出来的模块做一个依赖关系的排序<br><img src="https://upload-images.jianshu.io/upload_images/2822814-5a09954c07b445f4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="组件化纵向依赖关系.png"></p>
+<h2 id="技术细节"><a href="#技术细节" class="headerlink" title="技术细节"></a>技术细节</h2><h3 id="多Module工程"><a href="#多Module工程" class="headerlink" title="多Module工程"></a>多Module工程</h3><p>根据上述理论对工程进行拆分<br>根据上面的框架图，大致把一个基础应用项目拆分出下列几个Module<br><img src="https://upload-images.jianshu.io/upload_images/2822814-9278a9ae9a0be146.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="组件化工程目录.png"><br>在此有一个小细节，可以对基础功能库所依赖的三方做一个简单的gradle管理<br><img src="https://upload-images.jianshu.io/upload_images/2822814-5dac87fba8843af5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="commonlib依赖截图.png"><br>图中对依赖的三方进行了一个简单的依赖，后期也可写一个函数来将依赖进行升级，重点不在写法，在于抽取。  </p>
+<ol>
+<li>在根目录下建立一个xx.gradle文件</li>
+<li>编写对应的依赖常量代码</li>
+<li>在build.gradle中引用</li>
+<li>在对应的文件中使用<br>注意，如果想要在别的.gradle中使用声明的这些常量，一定要在抽取的xx.gradle文件中将对应的代码块用”ext”进行包裹<br><img src="https://upload-images.jianshu.io/upload_images/2822814-11cd54402d5cc1c9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="依赖常量代码部分截图.png"><br>在工程根目录的build.gradle中加上如下代码：<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apply <span class="keyword">from</span>: <span class="string">"config.gradle"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这样在Module对应的编译脚本文件中就能正常引用了，如：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> ANDROID_VERSIONS = rootProject.ext.android</span><br><span class="line"><span class="keyword">def</span> OTHER_LIBRARY = rootProject.ext.<span class="keyword">dependencies</span></span><br><span class="line">...</span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    implementation <span class="keyword">fileTree</span>(<span class="keyword">include</span>: [<span class="string">'*.jar'</span>], dir: <span class="string">'libs'</span>)</span><br><span class="line">    api OTHER_LIBRARY.appcompatv7</span><br><span class="line">    api OTHER_LIBRARY.constraintlayout</span><br><span class="line">    api OTHER_LIBRARY.recyclerview</span><br><span class="line">    api OTHER_LIBRARY.cardview</span><br><span class="line">    api OTHER_LIBRARY.retrofit</span><br><span class="line">    api OTHER_LIBRARY.converterScalars</span><br><span class="line">    api OTHER_LIBRARY.okHttpLoggingInterceptor</span><br><span class="line">    api OTHER_LIBRARY.convertergson</span><br><span class="line">    api OTHER_LIBRARY.adapterrxjava2</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如此以后在查看或者更换依赖的时候也方便查看和维护，注意在进行依赖的过程中，因为依赖不同的三方，可能会出现重复依赖相同库而版本不一致的情况，这里有两种解决办法，一种是在对应依赖的三方中剔除对应的pom依赖，如：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">api(<span class="string">'com.facebook.fresco:fresco:0.10.0'</span>) &#123;</span><br><span class="line">       <span class="keyword">exclude</span> module: <span class="string">'support-v4'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>另外一种是强制依赖的相同库的版本，如：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">configurations</span>.all &#123;</span><br><span class="line">    resolutionStrategy.eachDependency &#123; DependencyResolveDetails details -&gt;</span><br><span class="line">        <span class="keyword">def</span> requested = details.requested</span><br><span class="line">        <span class="keyword">if</span> (requested.<span class="keyword">group</span> == <span class="string">'com.android.support'</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (requested.name.startsWith(<span class="string">"support-"</span>) ||</span><br><span class="line">                    requested.name.startsWith(<span class="string">"animated"</span>) ||</span><br><span class="line">                    requested.name.startsWith(<span class="string">"cardview"</span>) ||</span><br><span class="line">                    requested.name.startsWith(<span class="string">"design"</span>) ||</span><br><span class="line">                    requested.name.startsWith(<span class="string">"gridlayout"</span>) ||</span><br><span class="line">                    requested.name.startsWith(<span class="string">"recyclerview"</span>) ||</span><br><span class="line">                    requested.name.startsWith(<span class="string">"transition"</span>) ||</span><br><span class="line">                    requested.name.startsWith(<span class="string">"appcompat"</span>)) &#123;</span><br><span class="line">                details.useVersion SUPPORT_LIB_VERSION</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (requested.name.startsWith(<span class="string">"multidex"</span>)) &#123;</span><br><span class="line">                details.useVersion OTHER_VERSION.multiDex</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="组件路由"><a href="#组件路由" class="headerlink" title="组件路由"></a>组件路由</h3><p>路由其实是组件化的核心组件，网上也有很多优秀的开源库，这里就直接使用阿里的<a href="https://github.com/alibaba/ARouter" target="_blank" rel="noopener">开源库ARouter</a>，ARouter也是其中比较知名和稳定的路由框架之一。  </p>
+<ol>
+<li><p>添加依赖和配置</p>
+ <figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        ...</span><br><span class="line">        javaCompileOptions &#123;</span><br><span class="line">            annotationProcessorOptions &#123;</span><br><span class="line">                arguments = [AROUTER_MODULE_NAME: <span class="keyword">project</span>.getName()]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    <span class="comment">// 替换成最新版本, 需要注意的是api</span></span><br><span class="line">    <span class="comment">// 要与compiler匹配使用，均使用最新版可以保证兼容</span></span><br><span class="line">    <span class="keyword">compile</span> <span class="string">'com.alibaba:arouter-api:x.x.x'</span></span><br><span class="line">    annotationProcessor <span class="string">'com.alibaba:arouter-compiler:x.x.x'</span></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 旧版本gradle插件(&lt; 2.2)，可以使用apt插件，配置方法见文末'其他#4'</span></span><br><span class="line"><span class="comment">// Kotlin配置参考文末'其他#5'</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加注解</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在支持路由的页面上添加注解(必选)</span></span><br><span class="line"><span class="comment">// 这里的路径需要注意的是至少需要有两级，/xx/xx</span></span><br><span class="line"><span class="meta">@Route</span>(path = <span class="string">"/test/activity"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">YourActivity</span> <span class="title">extend</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>初始化SDK</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (isDebug()) &#123;           <span class="comment">// 这两行必须写在init之前，否则这些配置在init过程中将无效</span></span><br><span class="line">    ARouter.openLog();     <span class="comment">// 打印日志</span></span><br><span class="line">    ARouter.openDebug();   <span class="comment">// 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)</span></span><br><span class="line">&#125;</span><br><span class="line">ARouter.init(mApplication); <span class="comment">// 尽可能早，推荐在Application中初始化</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>发起路由操作</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 应用内简单的跳转(通过URL跳转在'进阶用法'中)</span></span><br><span class="line">ARouter.getInstance().build(<span class="string">"/test/activity"</span>).navigation();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 跳转并携带参数</span></span><br><span class="line">ARouter.getInstance().build(<span class="string">"/test/1"</span>)</span><br><span class="line">            .withLong(<span class="string">"key1"</span>, <span class="number">666L</span>)</span><br><span class="line">            .withString(<span class="string">"key3"</span>, <span class="string">"888"</span>)</span><br><span class="line">            .withObject(<span class="string">"key4"</span>, <span class="keyword">new</span> Test(<span class="string">"Jack"</span>, <span class="string">"Rose"</span>))</span><br><span class="line">            .navigation();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加混淆规则(如果使用了Proguard)</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-keep public class com.alibaba.android.arouter.routes.**&#123;*;&#125;</span><br><span class="line">-keep public class com.alibaba.android.arouter.facade.**&#123;*;&#125;</span><br><span class="line">-keep class * implements com.alibaba.android.arouter.facade.template.ISyringe&#123;*;&#125;</span><br><span class="line"></span><br><span class="line"># 如果使用了 byType 的方式获取 Service，需添加下面规则，保护接口</span><br><span class="line">-keep interface * implements com.alibaba.android.arouter.facade.template.IProvider</span><br><span class="line"></span><br><span class="line"># 如果使用了 单类注入，即不定义接口实现 IProvider，需添加下面规则，保护实现</span><br><span class="line"># -keep class * implements com.alibaba.android.arouter.facade.template.IProvider</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用 Gradle 插件实现路由表的自动加载 (可选)</p>
+ <figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: <span class="string">'com.alibaba.arouter'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">buildscript</span> &#123;</span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">dependencies</span> &#123;</span><br><span class="line">        <span class="keyword">classpath</span> <span class="string">"com.alibaba:arouter-register:?"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 可选使用，通过 ARouter 提供的注册插件进行路由表的自动加载(power by <a href="https://github.com/luckybilly/AutoRegister" target="_blank" rel="noopener">AutoRegister</a>)， 默认通过扫描 dex 的方式<br> 进行加载通过 gradle 插件进行自动注册可以缩短初始化时间解决应用加固导致无法直接访问<br> dex 文件，初始化失败的问题，需要注意的是，该插件必须搭配 api 1.3.0 以上版本使用！</p>
+</li>
+<li><p>使用 IDE 插件导航到目标类 (可选)<br> 在 Android Studio 插件市场中搜索 <code>ARouter Helper</code>, 或者直接下载文档上方 <code>最新版本</code> 中列出的 <code>arouter-idea-plugin</code> zip 安装包手动安装，安装后<br> 插件无任何设置，可以在跳转代码的行首找到一个图标 (<img src="http://upload-images.jianshu.io/upload_images/2822814-90e395877428d7a7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="navigation">)<br> 点击该图标，即可跳转到标识了代码中路径的目标类  </p>
+</li>
+</ol>
+<h3 id="单独调试"><a href="#单独调试" class="headerlink" title="单独调试"></a>单独调试</h3><p>当工程被拆分为组件化的时候，那么Module的单独调试就显得尤为重要，无论是对问题的跟踪还是业务线的并行开发，都需要工程具备单独运行调试的能力。这里单独调试同样是对gradle的操作，通过对编译脚本的编写来达到组件单独运行的目的<br>1.对需要单独运行的Module抽取变量进行记录<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 欢迎组件</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   welcomeLibRunAlone = <span class="keyword">false</span></span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 分享组件</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   shareLibRunAlone = <span class="keyword">false</span></span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 主业务组件</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   mainBusinessLibRunAlone = <span class="keyword">false</span></span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 登录组件</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   loginLibRunAlone = <span class="keyword">false</span></span><br></pre></td></tr></table></figure></p>
+<ol start="2">
+<li>在对应Module的编译脚本文件中添加判断Module是以Lib形式依赖还是以App方式进行依赖，如下代码  <figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> runAlone = rootProject.ext.loginLibRunAlone.toBoolean()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (runAlone) &#123;</span><br><span class="line">    apply plugin: <span class="string">'com.android.application'</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    apply plugin: <span class="string">'com.android.library'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>当进行到这里，其实就可以让Module单独运行起来，同时添加Application中一些必要的元素，清单文件Manifest.xml文件，但是这个xml文件是文件在单独运行的过程中所需要的，所以这里要放到一个单独的目录下<br><img src="https://upload-images.jianshu.io/upload_images/2822814-b0a4b903b36bbffd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="组件化单独运行目录结构.png"><br>同时在此基础上通过编译脚本配置单独运行时获取的Android相关文件<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">sourceSets</span> &#123;</span><br><span class="line">        main &#123;</span><br><span class="line">            <span class="keyword">if</span> (runAlone) &#123;</span><br><span class="line">                manifest.srcFile <span class="string">'src/main/runAlone/AndroidManifest.xml'</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                manifest.srcFile <span class="string">'src/main/AndroidManifest.xml'</span></span><br><span class="line">                java&#123;</span><br><span class="line">                    <span class="keyword">exclude</span> <span class="string">'src/main/runAlone/*'</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>根据以上配置，就可以使得登录模块单独运行起来，调试起来非常方便</p>
+<h3 id="整体调试"><a href="#整体调试" class="headerlink" title="整体调试"></a>整体调试</h3><p>根据上述方案，app壳其实只需要依赖业务组件即可<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    implementation <span class="keyword">fileTree</span>(<span class="keyword">include</span>: [<span class="string">'*.jar'</span>], dir: <span class="string">'libs'</span>)</span><br><span class="line">    implementation <span class="keyword">project</span>(<span class="string">':mainbusinesslib'</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>业务组件在根据调试变量对相应的基础组件进行依赖<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    implementation <span class="keyword">fileTree</span>(<span class="keyword">include</span>: [<span class="string">'*.jar'</span>], dir: <span class="string">'libs'</span>)</span><br><span class="line"></span><br><span class="line">    api <span class="keyword">project</span>(<span class="string">':baseuilib'</span>)</span><br><span class="line">    annotationProcessor OTHER_LIBRARY.arouterCompiler</span><br><span class="line">    <span class="keyword">if</span>(!shareAlone)&#123;</span><br><span class="line">        api <span class="keyword">project</span>(<span class="string">':sharelib'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(!welcomeAlone)&#123;</span><br><span class="line">        api <span class="keyword">project</span>(<span class="string">':welcomelib'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(!loginAlone)&#123;</span><br><span class="line">        api <span class="keyword">project</span>(<span class="string">':loginlib'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="编译优化"><a href="#编译优化" class="headerlink" title="编译优化"></a>编译优化</h3><p>这里的编译优化是针对gradle编译而言，其一是gradle在编译时的配置，如优化不检查png图片的合法性<a href="https://developer.android.com/studio/build/optimize-your-build?hl=zh-cn" target="_blank" rel="noopener">等等</a>  </p>
+<p>其二是固化底层代码，只编译业务线代码，所谓固化其实是对开发不相关的代码进行aar依赖，这样在编译的时候就不需要去编译这些库中的代码，大大节省编译时间，增加开发效率<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> dependencyMode = <span class="string">"aar"</span></span><br><span class="line">...</span><br><span class="line">    commonLibVersino = <span class="string">"1.0.0"</span></span><br><span class="line">    loginLibVersino = <span class="string">"1.0.0"</span></span><br><span class="line">    shareLibVersino = <span class="string">"1.0.0"</span></span><br><span class="line">    welcomeLibVersino = <span class="string">"1.0.0"</span></span><br><span class="line">    switchs = [</span><br><span class="line">            <span class="string">"CommonLib"</span>  : dependencyMode == <span class="string">"aar"</span>,</span><br><span class="line">            <span class="string">"ShareModule"</span>: dependencyMode == <span class="string">""</span>,</span><br><span class="line">            <span class="string">"LoginModule"</span>: dependencyMode == <span class="string">""</span>,</span><br><span class="line">            <span class="string">"WelcomeLib"</span> : dependencyMode == <span class="string">""</span>,</span><br><span class="line">    ]</span><br><span class="line">...</span><br><span class="line"><span class="keyword">dependencies</span> = [</span><br><span class="line">           ...</span><br><span class="line">            <span class="string">"commonlib"</span> : switchs[<span class="string">'CommonLib'</span>] ? <span class="string">"com.done.commonlib:CommonLib:"</span> + <span class="string">"$commonLibVersino"</span> : findProject(<span class="string">':commonlib'</span>)</span><br><span class="line"></span><br><span class="line">    ]</span><br></pre></td></tr></table></figure></p>
+<p>同时在setting.gradle中编写一下代码<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="keyword">include</span> switchs[<span class="string">'CommonLib'</span>] ? <span class="string">''</span> : <span class="string">'commonlib'</span></span><br></pre></td></tr></table></figure></p>
+<p>综上，一个简单的组件化架构就搭建完毕了</p>
+<p>后期会整理一下的相关的代码发布到github上哈~欢迎大家进群交流哈~群号：929891705</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>老衲再次化点缘，谢谢各位看客大佬了</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/pay_wx.png" alt="Done 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/pay_ali.png" alt="Done 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/组件化/" rel="tag"># 组件化</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/12/设计模式——模版方法/" rel="next" title="设计模式——模版方法">
+                <i class="fa fa-chevron-left"></i> 设计模式——模版方法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/timg_2.gif"
+                alt="Done" />
+            
+              <p class="site-author-name" itemprop="name">Done</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/DoneMr" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/u012402505" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-globe"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          <script type="text/javascript" src="http://tajs.qq.com/stats?sId=66068266" charset="UTF-8"></script>
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Android移动端项目经过长时间的迭代和维护，代码经手不同的人，产生冗余和规范问题也是一件不可避免的事情，而单工程的架构在面对这样的情况更是心有余而力不足，组件化也正是针对此类场景衍生出来的技术手段"><span class="nav-number">1.</span> <span class="nav-text">Android移动端项目经过长时间的迭代和维护，代码经手不同的人，产生冗余和规范问题也是一件不可避免的事情，而单工程的架构在面对这样的情况更是心有余而力不足，组件化也正是针对此类场景衍生出来的技术手段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特点"><span class="nav-number">2.</span> <span class="nav-text">特点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码解耦"><span class="nav-number">2.1.</span> <span class="nav-text">代码解耦</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#依赖注入"><span class="nav-number">2.1.1.</span> <span class="nav-text">依赖注入</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结构解耦"><span class="nav-number">2.2.</span> <span class="nav-text">结构解耦</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#横向拆分"><span class="nav-number">2.2.1.</span> <span class="nav-text">横向拆分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#纵向排序"><span class="nav-number">2.2.2.</span> <span class="nav-text">纵向排序</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#技术细节"><span class="nav-number">3.</span> <span class="nav-text">技术细节</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多Module工程"><span class="nav-number">3.1.</span> <span class="nav-text">多Module工程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组件路由"><span class="nav-number">3.2.</span> <span class="nav-text">组件路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单独调试"><span class="nav-number">3.3.</span> <span class="nav-text">单独调试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#整体调试"><span class="nav-number">3.4.</span> <span class="nav-text">整体调试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译优化"><span class="nav-number">3.5.</span> <span class="nav-text">编译优化</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Done</span>
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=66068266";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+
